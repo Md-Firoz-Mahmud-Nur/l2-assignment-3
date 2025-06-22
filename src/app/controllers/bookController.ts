@@ -21,9 +21,7 @@ bookRoutes.post(
   }
 );
 
-bookRoutes.get(
-  "/",
-  async (req: Request, res: Response, next: NextFunction) => {
+bookRoutes.get("/", async (req: Request, res: Response, next: NextFunction) => {
   try {
     const query = req.query;
     const filter = query.filter ? { genre: query.filter } : {};
@@ -99,11 +97,19 @@ bookRoutes.delete(
 
       const deletedBook = await Book.findByIdAndDelete(bookId);
 
-      res.status(200).json({
-        success: true,
-        message: "Book deleted successfully",
-        data: null,
-      });
+      if (deletedBook === null) {
+        res.status(404).json({
+          success: false,
+          message: "Book not found",
+          data: null,
+        });
+      } else {
+        res.status(200).json({
+          success: true,
+          message: "Book deleted successfully",
+          data: null,
+        });
+      }
     } catch (error: any) {
       next(error);
     }
