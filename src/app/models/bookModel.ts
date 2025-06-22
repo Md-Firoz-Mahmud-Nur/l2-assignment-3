@@ -4,11 +4,11 @@ import { Borrow } from "./borrowModel";
 
 const bookSchema = new Schema<IBook>(
   {
-    title: { type: String, required: [true, "title field is required"] },
-    author: { type: String, required: [true, "author field is required"] },
+    title: { type: String, required: [true, "Title field is required"] },
+    author: { type: String, required: [true, "Author field is required"] },
     genre: {
       type: String,
-      required: [true, "genere field is required"],
+      required: [true, "genre field is required"],
       enum: [
         "FICTION",
         "NON_FICTION",
@@ -20,14 +20,14 @@ const bookSchema = new Schema<IBook>(
     },
     isbn: {
       type: String,
-      required: true,
+      required: [true, "ISBN field is required"],
       unique: true,
     },
     description: { type: String },
     copies: {
       type: Number,
-      required: [true, "copies field is required"],
-      min: [0, "Negative value not allow"],
+      required: [true, "Copies field is required"],
+      min: [0, "Copies must be a positive number"],
     },
     available: { type: Boolean, default: true },
   },
