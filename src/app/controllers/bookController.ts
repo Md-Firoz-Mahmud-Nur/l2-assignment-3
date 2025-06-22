@@ -33,11 +33,19 @@ bookRoutes.get("/", async (req: Request, res: Response, next: NextFunction) => {
       .sort({ [sortBy]: sort })
       .limit(limit);
 
-    res.status(200).json({
-      success: true,
-      message: "Books retrieved successfully",
-      data: books,
-    });
+    if (books.length === 0) {
+      res.status(404).json({
+        success: false,
+        message: "No books found",
+        data: null,
+      });
+    } else {
+      res.status(200).json({
+        success: true,
+        message: "Books retrieved successfully",
+        data: books,
+      });
+    }
   } catch (error: unknown) {
     next(error);
   }
@@ -51,11 +59,19 @@ bookRoutes.get(
 
       const books = await Book.findById(bookId);
 
-      res.status(200).json({
-        success: true,
-        message: "Book retrieved successfully",
-        data: books,
-      });
+      if (books === null) {
+        res.status(404).json({
+          success: false,
+          message: "Book not found",
+          data: null,
+        });
+      } else {
+        res.status(200).json({
+          success: true,
+          message: "Book retrieved successfully",
+          data: books,
+        });
+      }
     } catch (error: unknown) {
       next(error);
     }
@@ -74,13 +90,13 @@ bookRoutes.put(
         runValidators: true,
       });
 
-      if (updatedBook===null) {
+      if (updatedBook === null) {
         res.status(404).json({
           success: false,
           message: "Book not found",
           data: null,
         });
-      }else{
+      } else {
         res.status(200).json({
           success: true,
           message: "Book updated successfully",

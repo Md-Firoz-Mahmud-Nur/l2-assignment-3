@@ -81,11 +81,19 @@ borrowRoutes.get(
         },
       ]);
 
-      res.status(200).json({
-        success: true,
-        message: "Borrowed books summary retrieved successfully",
-        data: result,
-      });
+      if (result.length === 0) {
+        res.status(404).json({
+          success: false,
+          message: "No borrowed books found",
+          data: null,
+        });
+      } else {
+        res.status(200).json({
+          success: true,
+          message: "Borrowed books summary retrieved successfully",
+          data: result,
+        });
+      }
     } catch (error) {
       next(error);
     }
