@@ -22,7 +22,7 @@ Visit [BookHive](https://assignment-3-five-iota.vercel.app)
 - **Database:** MongoDB (Mongoose)
 - **Dev Tools:** ts-node-dev, ESLint, Prettier, dotenv
 - **Validation:** Mongoose schemas with enums, methods, and middleware
--
+
 ## Locally Run This Application
 
 1. **Clone the Repositories:**
