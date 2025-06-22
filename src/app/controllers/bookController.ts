@@ -20,3 +20,19 @@ bookRoutes.post(
     }
   }
 );
+
+bookRoutes.get(
+  "/",
+  async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const books = await Book.find()
+      res.status(200).json({
+        success: true,
+        message: "Books retrieved successfully",
+        data: books,
+      });
+    } catch (error: any) {
+      next(error);
+    }
+  }
+);
