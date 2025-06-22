@@ -15,7 +15,7 @@ bookRoutes.post(
         message: "Book created successfully",
         data: book,
       });
-    } catch (error: any) {
+    } catch (error: unknown) {
       next(error);
     }
   }
@@ -39,7 +39,7 @@ bookRoutes.get("/", async (req: Request, res: Response, next: NextFunction) => {
       message: "Books retrieved successfully",
       data: books,
     });
-  } catch (error: any) {
+  } catch (error: unknown) {
     next(error);
   }
 });
@@ -57,7 +57,7 @@ bookRoutes.get(
         message: "Book retrieved successfully",
         data: books,
       });
-    } catch (error: any) {
+    } catch (error: unknown) {
       next(error);
     }
   }
@@ -83,7 +83,7 @@ bookRoutes.put(
         message: "Book updated successfully",
         data: updatedBook,
       });
-    } catch (error: any) {
+    } catch (error: unknown) {
       next(error);
     }
   }
@@ -110,7 +110,7 @@ bookRoutes.delete(
           data: null,
         });
       }
-    } catch (error: any) {
+    } catch (error: unknown) {
       next(error);
     }
   }

@@ -8,5 +8,5 @@ export interface IBorrow {
 }
 
 export interface borrowStaticMethod extends Model<IBorrow> {
-  updateAvailability(body: IBorrow, bookData: IBook): any;
+  updateAvailability(body: IBorrow, bookData: IBook): Promise<IBook>;
 }
