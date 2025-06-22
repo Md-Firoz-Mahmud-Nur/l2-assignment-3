@@ -57,3 +57,43 @@ borrowRoutes.post(
   }
 );
 
+borrowRoutes.get("/", async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const result = await Borrow.aggregate([
+      {
+        $group: {
+          _id: "$book",
+          totalQuantity: { $sum: "$quantity" },
+        },
+      },
+      {
+        $lookup: {
+          from: "books",
+          localField: "_id",
+          foreignField: "_id",
+          as: "book",
+        },
+      },
+      {
+        $project: {
+          totalQuantity: 1,
+          "book.title": 1,
+          "book.isbn": 1,
+          _id: 0,
+        },
+      },
+    ]);
+
+    res.status(200).json({
+      success: true,
+      message: "Borrowed books summary retrieved successfully",
+      data: result,
+    });
+  } catch (error) {
+    next(error);
+  }
+})
