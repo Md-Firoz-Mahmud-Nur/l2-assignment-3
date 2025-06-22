@@ -1,8 +1,8 @@
 import { ErrorRequestHandler } from "express";
 import mongoose from "mongoose";
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const globalErrorHandler: ErrorRequestHandler = (err, req, res, next) => {
-  console.log("err", err);
   const errorResponse = {
     message: "Something went wrong!",
     success: false,

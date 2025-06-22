@@ -1,7 +1,7 @@
 import app from "./app";
 import mongoose from "mongoose";
-require("dotenv").config();
-
+import dotenv from "dotenv";
+dotenv.config();
 
 const PORT = 5000;
 

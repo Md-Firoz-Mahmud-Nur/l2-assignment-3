@@ -25,7 +25,6 @@ bookRoutes.get("/", async (req: Request, res: Response, next: NextFunction) => {
   try {
     const query = req.query;
     const filter = query.filter ? { genre: query.filter } : {};
-    console.log(filter);
     const sortBy = query.sortBy as string;
     const sort = query.sort === "asc" ? 1 : -1;
     const limit = parseInt(query.limit as string) || 10;
@@ -69,20 +68,25 @@ bookRoutes.put(
     try {
       const bookId = req.params.bookId;
       const body = req.body;
-      console.log(body);
 
       const updatedBook = await Book.findByIdAndUpdate(bookId, body, {
         new: true,
         runValidators: true,
       });
 
-      console.log(updatedBook);
-
-      res.status(200).json({
-        success: true,
-        message: "Book updated successfully",
-        data: updatedBook,
-      });
+      if (updatedBook===null) {
+        res.status(404).json({
+          success: false,
+          message: "Book not found",
+          data: null,
+        });
+      }else{
+        res.status(200).json({
+          success: true,
+          message: "Book updated successfully",
+          data: updatedBook,
+        });
+      }
     } catch (error: unknown) {
       next(error);
     }

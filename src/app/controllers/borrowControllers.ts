@@ -10,7 +10,6 @@ borrowRoutes.post(
     try {
       const body = req.body;
       const bookData = await Book.findById(body?.book);
-      console.log("bookData", bookData);
 
       if (bookData === null) {
         res.status(404).json({

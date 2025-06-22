@@ -38,8 +38,7 @@ const bookSchema = new Schema<IBook>(
 );
 
 bookSchema.post("findOneAndDelete", async function (doc, next) {
-  const res = await Borrow.deleteMany({ book: doc._id });
-  console.log(res);
+  await Borrow.deleteMany({ book: doc._id });
   next();
 });
 
