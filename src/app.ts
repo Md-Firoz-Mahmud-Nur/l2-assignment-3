@@ -12,7 +12,7 @@ app.use("/api/borrow", borrowRoutes);
 app.use(globalErrorHandler);
 
 app.get("/", (req: Request, res: Response) => {
-  res.send("Welcome to Library Management app!");
+  res.send("Welcome to BookHive - Library Management API!");
 });
 
 export default app;

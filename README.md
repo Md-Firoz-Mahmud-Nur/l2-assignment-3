@@ -1,10 +1,10 @@
 # BookHive - Library Management API
 
-A **Library Management System** built with **Express**, **TypeScript**, and **MongoDB (Mongoose)**.  
+A **Library Management System** built with **Express**, **TypeScript**, and **MongoDB (Mongoose)**.
 This project allows you to manage books, borrow them with availability checks, and view borrowed book summaries — with clean API design and consistent error handling.
 
 ## Live Site URL
-Visit [BookHive](https://assignment-3-flax-seven.vercel.app/)
+Visit [BookHive](https://assignment-3-five-iota.vercel.app)
 
 ## Project Overview
 
@@ -22,8 +22,8 @@ Visit [BookHive](https://assignment-3-flax-seven.vercel.app/)
 - **Database:** MongoDB (Mongoose)
 - **Dev Tools:** ts-node-dev, ESLint, Prettier, dotenv
 - **Validation:** Mongoose schemas with enums, methods, and middleware
-- 
-## Locally Run This Application 
+-
+## Locally Run This Application
 
 1. **Clone the Repositories:**
     ```sh
@@ -36,7 +36,7 @@ Visit [BookHive](https://assignment-3-flax-seven.vercel.app/)
     ```sh
     npm install
     ```
-    
+
 3. **Add `.env` file in the root of project:**
     ```sh
     MONGO_DB_USER=
