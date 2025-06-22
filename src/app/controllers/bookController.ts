@@ -21,7 +21,9 @@ bookRoutes.post(
   }
 );
 
-bookRoutes.get("/", async (req: Request, res: Response, next: NextFunction) => {
+bookRoutes.get(
+  "/",
+  async (req: Request, res: Response, next: NextFunction) => {
   try {
     const query = req.query;
     const filter = query.filter ? { genre: query.filter } : {};
@@ -81,7 +83,26 @@ bookRoutes.put(
       res.status(200).json({
         success: true,
         message: "Book updated successfully",
-        updatedBook,
+        data: updatedBook,
+      });
+    } catch (error: any) {
+      next(error);
+    }
+  }
+);
+
+bookRoutes.delete(
+  "/:bookId",
+  async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const bookId = req.params.bookId;
+
+      const deletedBook = await Book.findByIdAndDelete(bookId);
+
+      res.status(200).json({
+        success: true,
+        message: "Book deleted successfully",
+        data: null,
       });
     } catch (error: any) {
       next(error);
