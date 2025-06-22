@@ -1,5 +1,5 @@
 import { Model, Types } from "mongoose";
-import { IBook } from "./bookInterface";
+import { IBookDocument } from "./bookInterface";
 
 export interface IBorrow {
   book: Types.ObjectId;
@@ -8,5 +8,5 @@ export interface IBorrow {
 }
 
 export interface borrowStaticMethod extends Model<IBorrow> {
-  updateAvailability(body: IBorrow, bookData: IBook): Promise<IBook>;
+  updateAvailability(body: IBorrow, bookData: IBookDocument): Promise<IBookDocument>;
 }

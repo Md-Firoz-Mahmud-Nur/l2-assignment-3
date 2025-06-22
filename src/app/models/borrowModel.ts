@@ -1,5 +1,5 @@
 import { model, Schema } from "mongoose";
-import { IBook } from "../interfaces/bookInterface";
+import { IBookDocument } from "../interfaces/bookInterface";
 import { borrowStaticMethod, IBorrow } from "../interfaces/borrowInterface";
 
 const borrowSchema = new Schema<IBorrow, borrowStaticMethod>(
@@ -13,7 +13,7 @@ const borrowSchema = new Schema<IBorrow, borrowStaticMethod>(
 
 borrowSchema.static(
   "updateAvailability",
-  async function (body: IBorrow, bookData: IBook) {
+  async function (body: IBorrow, bookData: IBookDocument) {
     bookData.copies -= body.quantity;
     if (bookData.copies <= 0) {
       bookData.available = false;
