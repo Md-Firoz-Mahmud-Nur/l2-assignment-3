@@ -21,24 +21,39 @@ bookRoutes.post(
   }
 );
 
-bookRoutes.get(
-  "/",
-  async (req: Request, res: Response, next: NextFunction) => {
-    try {
-      const query = req.query;
-      const filter = query.filter ? { genre: query.filter } : {};
-      console.log(filter);
-      const sortBy = query.sortBy as string;
-      const sort = query.sort === "asc" ? 1 : -1;
-      const limit = parseInt(query.limit as string) || 10;
+bookRoutes.get("/", async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const query = req.query;
+    const filter = query.filter ? { genre: query.filter } : {};
+    console.log(filter);
+    const sortBy = query.sortBy as string;
+    const sort = query.sort === "asc" ? 1 : -1;
+    const limit = parseInt(query.limit as string) || 10;
 
-      const books = await Book.find(filter)
-        .sort({ [sortBy]: sort })
-        .limit(limit);
+    const books = await Book.find(filter)
+      .sort({ [sortBy]: sort })
+      .limit(limit);
+
+    res.status(200).json({
+      success: true,
+      message: "Books retrieved successfully",
+      data: books,
+    });
+  } catch (error: any) {
+    next(error);
+  }
+});
+
+bookRoutes.get(
+  "/:bookId", async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const bookId = req.params.bookId;
+
+      const books = await Book.findById(bookId);
 
       res.status(200).json({
         success: true,
-        message: "Books retrieved successfully",
+        message: "Book retrieved successfully",
         data: books,
       });
     } catch (error: any) {
