@@ -163,3 +163,7 @@ GET `/api/books`
   ]
 }
 ```
+
+## Contributing
+
+Contributions are welcome! Please fork the repo and submit a pull request with your changes.
