@@ -68,10 +68,15 @@ borrowRoutes.get(
           },
         },
         {
+          $unwind: "$book",
+        },
+        {
           $project: {
             totalQuantity: 1,
-            "book.title": 1,
-            "book.isbn": 1,
+            book: {
+              title: "$book.title",
+              isbn: "$book.isbn",
+            },
             _id: 0,
           },
         },
