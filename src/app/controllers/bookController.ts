@@ -25,7 +25,17 @@ bookRoutes.get(
   "/",
   async (req: Request, res: Response, next: NextFunction) => {
     try {
-      const books = await Book.find()
+      const query = req.query;
+      const filter = query.filter ? { genre: query.filter } : {};
+      console.log(filter);
+      const sortBy = query.sortBy as string;
+      const sort = query.sort === "asc" ? 1 : -1;
+      const limit = parseInt(query.limit as string) || 10;
+
+      const books = await Book.find(filter)
+        .sort({ [sortBy]: sort })
+        .limit(limit);
+
       res.status(200).json({
         success: true,
         message: "Books retrieved successfully",
