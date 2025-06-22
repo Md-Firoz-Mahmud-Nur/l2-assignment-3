@@ -45,7 +45,8 @@ bookRoutes.get("/", async (req: Request, res: Response, next: NextFunction) => {
 });
 
 bookRoutes.get(
-  "/:bookId", async (req: Request, res: Response, next: NextFunction) => {
+  "/:bookId",
+  async (req: Request, res: Response, next: NextFunction) => {
     try {
       const bookId = req.params.bookId;
 
@@ -55,6 +56,32 @@ bookRoutes.get(
         success: true,
         message: "Book retrieved successfully",
         data: books,
+      });
+    } catch (error: any) {
+      next(error);
+    }
+  }
+);
+
+bookRoutes.put(
+  "/:bookId",
+  async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const bookId = req.params.bookId;
+      const body = req.body;
+      console.log(body);
+
+      const updatedBook = await Book.findByIdAndUpdate(bookId, body, {
+        new: true,
+        runValidators: true,
+      });
+
+      console.log(updatedBook);
+
+      res.status(200).json({
+        success: true,
+        message: "Book updated successfully",
+        updatedBook,
       });
     } catch (error: any) {
       next(error);
