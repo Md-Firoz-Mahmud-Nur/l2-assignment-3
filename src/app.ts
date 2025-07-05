@@ -14,6 +14,7 @@ app.use(
       "http://localhost:5175",
       "https://assignment-04-dusky.vercel.app",
     ],
+    credentials: true,
   })
 );
 
