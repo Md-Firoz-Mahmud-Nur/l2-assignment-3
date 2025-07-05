@@ -25,7 +25,8 @@ bookRoutes.get("/", async (req: Request, res: Response, next: NextFunction) => {
   try {
     const query = req.query;
     const filter = query.filter ? { genre: query.filter } : {};
-    const sortBy = query.sortBy as string;
+    // const sortBy = query.sortBy as string;
+    const sortBy = (req.query?.sortBy as string) || "createdAt";
     const sort = query.sort === "asc" ? 1 : -1;
     const limit = parseInt(query.limit as string) || 10;
 
@@ -34,7 +35,7 @@ bookRoutes.get("/", async (req: Request, res: Response, next: NextFunction) => {
       .limit(limit);
 
     if (books.length === 0) {
-      res.status(404).json({
+      res.status(200).json({
         success: false,
         message: "No books found",
         data: null,
@@ -78,6 +79,46 @@ bookRoutes.get(
   }
 );
 
+// bookRoutes.put(
+//   "/:bookId",
+//   async (req: Request, res: Response, next: NextFunction) => {
+//     try {
+//       const bookId = req.params.bookId;
+//       const body = req.body;
+
+//       if (body.copies === 0) {
+//         res.status(404).json({
+//           success: false,
+//           message: "Insert at least one copy",
+//           data: null,
+//         });
+//       } else {
+//         body.available = true;
+//         const updatedBook = await Book.findByIdAndUpdate(bookId, body, {
+//           new: true,
+//           runValidators: true,
+//         });
+
+//         if (updatedBook === null) {
+//           res.status(404).json({
+//             success: false,
+//             message: "Book not found",
+//             data: null,
+//           });
+//         } else {
+//           res.status(200).json({
+//             success: true,
+//             message: "Book updated successfully",
+//             data: updatedBook,
+//           });
+//         }
+//       }
+//     } catch (error: unknown) {
+//       next(error);
+//     }
+//   }
+// );
+
 bookRoutes.put(
   "/:bookId",
   async (req: Request, res: Response, next: NextFunction) => {
@@ -86,32 +127,29 @@ bookRoutes.put(
       const body = req.body;
 
       if (body.copies === 0) {
-        res.status(404).json({
-          success: false,
-          message: "Insert at least one copy",
-          data: null,
-        });
+        body.available = false;
       } else {
         body.available = true;
-        const updatedBook = await Book.findByIdAndUpdate(bookId, body, {
-          new: true,
-          runValidators: true,
-        });
-
-        if (updatedBook === null) {
-          res.status(404).json({
-            success: false,
-            message: "Book not found",
-            data: null,
-          });
-        } else {
-          res.status(200).json({
-            success: true,
-            message: "Book updated successfully",
-            data: updatedBook,
-          });
-        }
       }
+
+      const updatedBook = await Book.findByIdAndUpdate(bookId, body, {
+        new: true,
+        runValidators: true,
+      });
+
+      if (!updatedBook) {
+        return res.status(404).json({
+          success: false,
+          message: "Book not found",
+          data: null,
+        });
+      }
+
+      res.status(200).json({
+        success: true,
+        message: "Book updated successfully",
+        data: updatedBook,
+      });
     } catch (error: unknown) {
       next(error);
     }
